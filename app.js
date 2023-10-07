@@ -1,6 +1,6 @@
 const express = require('express');
 const mongoose = require('mongoose');
-const bodyParser = require('body-parser');
+const helmet = require('helmet');
 const appRouter = require('./routes/index');
 
 mongoose.connect('mongodb://127.0.0.1:27017/mestodb', {
@@ -10,6 +10,8 @@ mongoose.connect('mongodb://127.0.0.1:27017/mestodb', {
 const { PORT = 3000 } = process.env;
 
 const app = express();
+
+app.use(helmet());
 
 app.use(express.json()); // вместо бодипарсера
 app.use(express.urlencoded({ extended: true })); // вместо urlencoded из бодипарсера
