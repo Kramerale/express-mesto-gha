@@ -40,7 +40,11 @@ const deleteCard = (req, res) => {
     return res.status(200).send(card);
   })
   .catch(err => {
-    return res.status(internalServerError).send({message: 'Произошла ошибка на сервере'});
+    if(err.name === 'ValidationError' || err.name === 'CastError') {
+      return res.status(badRequest).send({message: 'Переданы некорректные данные'})
+    } else {
+      return res.status(internalServerError).send({message: 'Произошла ошибка на сервере'});
+    }
   })
 };
 
@@ -57,7 +61,11 @@ const addLike = (req, res) => {
     return res.status(200).send(card);
   })
   .catch(err => {
-    return res.status(internalServerError).send({message: 'Произошла ошибка на сервере'});
+    if(err.name === 'ValidationError' || err.name === 'CastError') {
+      return res.status(badRequest).send({message: 'Переданы некорректные данные'})
+    } else {
+      return res.status(internalServerError).send({message: 'Произошла ошибка на сервере'});
+    }
   })
 };
 
@@ -74,7 +82,11 @@ const deleteLike = (req, res) => {
     return res.status(200).send(card);
   })
   .catch(err => {
-    return res.status(internalServerError).send({message: 'Произошла ошибка на сервере'});
+    if(err.name === 'ValidationError' || err.name === 'CastError') {
+      return res.status(badRequest).send({message: 'Переданы некорректные данные'})
+    } else {
+      return res.status(internalServerError).send({message: 'Произошла ошибка на сервере'});
+    }
   })
 };
 
