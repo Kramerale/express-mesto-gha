@@ -14,7 +14,13 @@ const createUser = (req, res, next) => {
   .then(hash => {
     userModel.create({name, about, avatar, email, password: hash})
     .then(user => {
-      return res.status(201).send(user);
+      return res.status(201).send({data: {
+        _id: user._id,
+        name: user.name,
+        about: user.about,
+        avatar: user.avatar,
+        email: user.email
+      }});
     })
     .catch(err => {
       if(err.name === 'ValidationError' || err.name === 'CastError') {
