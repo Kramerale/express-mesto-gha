@@ -11,24 +11,24 @@ const createUser = (req, res, next) => {
   const {name, about, avatar, email} = req.body;
 
   bcrypt.hash(req.body.password, 10)
-  .then(hash => {
-    userModel.create({name, about, avatar, email, password: hash})
-    .then(user => {
-      return res.status(201).send({data: {
-        _id: user._id,
-        name: user.name,
-        about: user.about,
-        avatar: user.avatar,
-        email: user.email
-      }});
-    })
-    .catch(err => {
-      if(err.name === 'ValidationError' || err.name === 'CastError') {
-        throw new badRequestError('Переданы некорректные данные');
-      } else if (err.code === 11000) {
-        throw new conflictError('Пользователь с таким email существует');
-      }
-    })
+  .then(hash => userModel.create({
+    name, about, avatar, email, password: hash
+  }))
+  .then(user => {
+    return res.status(201).send({data: {
+      _id: user._id,
+      name: user.name,
+      about: user.about,
+      avatar: user.avatar,
+      email: user.email
+    }});
+  })
+  .catch(err => {
+    if(err.name === 'ValidationError' || err.name === 'CastError') {
+      throw new badRequestError('Переданы некорректные данные');
+    } else if (err.code === 11000) {
+      throw new conflictError('Пользователь с таким email существует');
+    }
   })
   .catch(next);
 };
