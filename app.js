@@ -1,7 +1,13 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const helmet = require('helmet');
+const {errors} = require('celebrate');
+
 const appRouter = require('./routes/index');
+const {login, createUser} = require('./controllers/users');
+const auth = require('./middlewares/auth');
+const handleErrors = require('./middlewares/handleErrors');
+const {loginValidation, createUserValidation} = require('./middlewares/validation');
 
 mongoose.connect('mongodb://127.0.0.1:27017/mestodb', {
   useNewUrlParser: true,
@@ -16,15 +22,16 @@ app.use(helmet());
 app.use(express.json()); // вместо бодипарсера
 app.use(express.urlencoded({ extended: true })); // вместо urlencoded из бодипарсера
 
-app.use((req, res, next) => {
-  req.user = {
-    _id: '651d5ec5aefa26e3639a418b'
-  };
+app.post('/signin', loginValidation, login);
+app.post('/signup', createUserValidation, createUser);
 
-  next();
-});
+app.use(auth);
 
 app.use(appRouter);
+
+app.use(errors());
+
+app.use(handleErrors); // добавлять в самом конце основного файла!!!
 
 app.listen(PORT, () => {
   console.log(`App listening on port ${PORT}`);
