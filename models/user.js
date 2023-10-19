@@ -35,7 +35,10 @@ const userSchema = new mongoose.Schema({
     required: [true, 'Поле "password" должно быть заполнено'],
     select: false
   },
-}, { versionKey: false });
+},
+{ versionKey: false },
+{ toObject: { useProjection: true }, toJSON: { useProjection: true } }
+);
 
 userSchema.statics.findUserByCredentials = function(email, password) {
   return this.findOne({email}).select('+password')
