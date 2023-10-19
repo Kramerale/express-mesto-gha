@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const bcrypt = require('bcryptjs');
 
 const isEmail = require('validator/lib/isEmail');
 
@@ -37,7 +38,7 @@ const userSchema = new mongoose.Schema({
   },
 },
 { versionKey: false },
-{ toObject: { useProjection: true }, toJSON: { useProjection: true } }
+// { toObject: { useProjection: true }, toJSON: { useProjection: true } }
 );
 
 userSchema.statics.findUserByCredentials = function(email, password) {
