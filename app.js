@@ -19,8 +19,8 @@ const app = express();
 
 app.use(helmet());
 
-app.use(express.json()); // вместо бодипарсера
-app.use(express.urlencoded({ extended: true })); // вместо urlencoded из бодипарсера
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 app.post('/signin', loginValidation, login);
 app.post('/signup', createUserValidation, createUser);

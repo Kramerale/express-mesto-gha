@@ -45,15 +45,16 @@ const getUserById = (req, res, next) => {
   const {userId} = req.params;
 
   userModel.findById(userId)
+  .orFail(new notFoundError('Пользователь с данным id не найден'))
   .then(user => {
-    if(!user) {
-      throw new notFoundError('Пользователь с данным id не найден');
-    }
     return res.status(200).send(user);
   })
   .catch(err => {
     if(err.name === 'ValidationError' || err.name === 'CastError') {
       throw new badRequestError('Переданы некорректные данные');
+    }
+    if(err.message === 'Пользователь с данным id не найден') {
+      throw new notFoundError('Пользователь с данным id не найден');
     }
   })
   .catch(next);
@@ -61,15 +62,16 @@ const getUserById = (req, res, next) => {
 
 const getUserInfo = (req, res, next) => {
   userModel.findById(req.user._id)
+  .orFail(new notFoundError('Пользователь с данным id не найден'))
   .then(user => {
-    if(!user) {
-      throw new notFoundError('Пользователь с данным id не найден');
-    }
     return res.status(200).send(user);
   })
   .catch(err => {
     if(err.name === 'ValidationError' || err.name === 'CastError') {
       throw new badRequestError('Переданы некорректные данные');
+    }
+    if(err.message === 'Пользователь с данным id не найден') {
+      throw new notFoundError('Пользователь с данным id не найден');
     }
   })
   .catch(next);
@@ -87,15 +89,16 @@ const updateUserInfoById = (req, res, next) => {
       upsert: true // если пользователь не найден, он будет создан
     }
   )
+  .orFail(new notFoundError('Пользователь с данным id не найден'))
   .then(user => {
-    if(!user) {
-      throw new notFoundError('Пользователь с данным id не найден');
-    }
     return res.status(200).send(user);
   })
   .catch(err => {
     if(err.name === 'ValidationError' || err.name === 'CastError') {
       throw new badRequestError('Переданы некорректные данные');
+    }
+    if(err.message === 'Пользователь с данным id не найден') {
+      throw new notFoundError('Пользователь с данным id не найден');
     }
   })
   .catch(next);
@@ -113,6 +116,7 @@ const updateUserAvatarById = (req, res, next) => {
       upsert: true // если пользователь не найден, он будет создан
     }
   )
+  .orFail(new notFoundError('Пользователь с данным id не найден'))
   .then(user => {
     if(!user) {
       throw new notFoundError('Пользователь с данным id не найден');
@@ -122,6 +126,9 @@ const updateUserAvatarById = (req, res, next) => {
   .catch(err => {
     if(err.name === 'ValidationError' || err.name === 'CastError') {
       throw new badRequestError('Переданы некорректные данные');
+    }
+    if(err.message === 'Пользователь с данным id не найден') {
+      throw new notFoundError('Пользователь с данным id не найден');
     }
   })
   .catch(next);
