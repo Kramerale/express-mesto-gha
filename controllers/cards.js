@@ -33,7 +33,9 @@ const deleteCard = (req, res, next) => {
   const {cardId} = req.params;
 
   cardModel.findById(cardId)
-  .orFail(new notFoundError('Карточка с данным id не найдена'))
+  .orFail(() => {
+    throw new notFoundError('Карточка с данным id не найдена')
+  })
   .then(card => {
     if(card.owner.toString() === req.user._id) {
       cardModel.findByIdAndRemove(cardId)
@@ -44,14 +46,14 @@ const deleteCard = (req, res, next) => {
       throw new forbiddenError('Нет доступа к удалению карточки');
     }
   })
-  .catch(err => {
-    if(err.name === 'ValidationError' || err.name === 'CastError') {
-      throw new badRequestError('Переданы некорректные данные');
-    }
-    if(err.message === 'Карточка с данным id не найдена') {
-      throw new notFoundError('Карточка с данным id не найдена');
-    }
-  })
+  // .catch(err => {
+  //   if(err.name === 'ValidationError' || err.name === 'CastError') {
+  //     throw new badRequestError('Переданы некорректные данные');
+  //   }
+  //   if(err.message === 'Карточка с данным id не найдена') {
+  //     throw new notFoundError('Карточка с данным id не найдена');
+  //   }
+  // })
   .catch(next);
 };
 
