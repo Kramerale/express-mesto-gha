@@ -29,12 +29,12 @@ const createUser = (req, res, next) => {
   })
   .catch((err) => {
     if (err.name === 'ValidationError' || err.name === 'CastError') {
-      throw new BadRequestError('Переданы некорректные данные');
+      next(new BadRequestError('Переданы некорректные данные'));
     } else if (err.code === 11000) {
-      throw new ConflictError('Пользователь с таким email существует');
+      next(new ConflictError('Пользователь с таким email существует'));
     }
-  })
-  .catch(next);
+  });
+  // .catch(next);
 };
 
 const getUsers = (req, res, next) => {
