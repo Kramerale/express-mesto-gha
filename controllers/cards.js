@@ -28,7 +28,6 @@ const createCard = (req, res, next) => {
       next(err);
     }
   });
-  // .catch(next);
 };
 
 const deleteCard = (req, res, next) => {
@@ -48,14 +47,6 @@ const deleteCard = (req, res, next) => {
       throw new ForbiddenError('Нет доступа к удалению карточки');
     }
   })
-  // .catch(err => {
-  //   if(err.name === 'ValidationError' || err.name === 'CastError') {
-  //     throw new BadRequestError('Переданы некорректные данные');
-  //   }
-  //   if(err.message === 'Карточка с данным id не найдена') {
-  //     throw new NotFoundError('Карточка с данным id не найдена');
-  //   }
-  // })
   .catch(next);
 };
 
@@ -80,7 +71,6 @@ const addLike = (req, res, next) => {
       next(err);
     }
   });
-  // .catch(next);
 };
 
 const deleteLike = (req, res, next) => {
@@ -97,13 +87,13 @@ const deleteLike = (req, res, next) => {
   })
   .catch((err) => {
     if (err.name === 'ValidationError' || err.name === 'CastError') {
-      throw new BadRequestError('Переданы некорректные данные');
+      next(new BadRequestError('Переданы некорректные данные'));
+    } else if (err.message === 'Карточка с данным id не найдена') {
+      next(new NotFoundError('Карточка с данным id не найдена'));
+    } else {
+      next(err);
     }
-    if (err.message === 'Карточка с данным id не найдена') {
-      throw new NotFoundError('Карточка с данным id не найдена');
-    }
-  })
-  .catch(next);
+  });
 };
 
 module.exports = {
