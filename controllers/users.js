@@ -90,7 +90,6 @@ const updateUserInfoById = (req, res, next) => {
     {
       new: true, // обработчик then получит на вход обновлённую запись
       runValidators: true, // данные будут валидированы перед изменением
-      upsert: true, // если пользователь не найден, он будет создан
     },
   )
   .orFail(new NotFoundError('Пользователь с данным id не найден'))
@@ -117,7 +116,6 @@ const updateUserAvatarById = (req, res, next) => {
     {
       new: true, // обработчик then получит на вход обновлённую запись
       runValidators: true, // данные будут валидированы перед изменением
-      upsert: true, // если пользователь не найден, он будет создан
     },
   )
   .orFail(new NotFoundError('Пользователь с данным id не найден'))
