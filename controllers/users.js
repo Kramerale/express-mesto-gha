@@ -32,6 +32,8 @@ const createUser = (req, res, next) => {
       next(new BadRequestError('Переданы некорректные данные'));
     } else if (err.code === 11000) {
       next(new ConflictError('Пользователь с таким email существует'));
+    } else {
+      next(err);
     }
   });
   // .catch(next);
@@ -55,13 +57,14 @@ const getUserById = (req, res, next) => {
   })
   .catch((err) => {
     if (err.name === 'ValidationError' || err.name === 'CastError') {
-      throw new BadRequestError('Переданы некорректные данные');
+      next(new BadRequestError('Переданы некорректные данные'));
+    } else if (err.message === 'Пользователь с данным id не найден') {
+      next(new NotFoundError('Пользователь с данным id не найден'));
+    } else {
+      next(err);
     }
-    if (err.message === 'Пользователь с данным id не найден') {
-      throw new NotFoundError('Пользователь с данным id не найден');
-    }
-  })
-  .catch(next);
+  });
+  // .catch(next);
 };
 
 const getUserInfo = (req, res, next) => {
