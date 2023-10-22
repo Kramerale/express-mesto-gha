@@ -1,8 +1,12 @@
 {
   "extends": "airbnb-base",
-  "import/no-extraneous-dependencies": ["error", {"packageDir": "./"}],
+  // "import/no-extraneous-dependencies": ["error", {"packageDir": "./"}],
   "rules": {
     "no-underscore-dangle": ["error", { "allow": ["_id"] }],
-    "no-console": "off"
+    "no-console": "off",
+    "indent": "off",
+    "arrow-body-style":"off",
+    "no-useless-escape": "off",
+    "func-names":"off"
   }
 }

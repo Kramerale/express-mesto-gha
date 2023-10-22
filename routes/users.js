@@ -1,6 +1,8 @@
 const router = require('express').Router();
-const {getUsers, getUserById, getUserInfo, updateUserInfoById, updateUserAvatarById} = require('../controllers/users');
-const {updateUserInfoValidation, updateUserAvatarValidation, userIdValidation} = require('../middlewares/validation');
+const {
+  getUsers, getUserById, getUserInfo, updateUserInfoById, updateUserAvatarById,
+} = require('../controllers/users');
+const { updateUserInfoValidation, updateUserAvatarValidation, userIdValidation } = require('../middlewares/validation');
 
 router.get('/', getUsers);
 router.get('/me', getUserInfo);

@@ -1,13 +1,13 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const helmet = require('helmet');
-const {errors} = require('celebrate');
+const { errors } = require('celebrate');
 
 const appRouter = require('./routes/index');
-const {login, createUser} = require('./controllers/users');
+const { login, createUser } = require('./controllers/users');
 const auth = require('./middlewares/auth');
 const handleErrors = require('./middlewares/handleErrors');
-const {loginValidation, createUserValidation} = require('./middlewares/validation');
+const { loginValidation, createUserValidation } = require('./middlewares/validation');
 
 mongoose.connect('mongodb://127.0.0.1:27017/mestodb', {
   useNewUrlParser: true,
