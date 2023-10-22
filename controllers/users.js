@@ -122,9 +122,6 @@ const updateUserAvatarById = (req, res, next) => {
   )
   .orFail(new NotFoundError('Пользователь с данным id не найден'))
   .then((user) => {
-    if (!user) {
-      throw new NotFoundError('Пользователь с данным id не найден');
-    }
     return res.status(200).send(user);
   })
   .catch((err) => {
