@@ -75,13 +75,14 @@ const getUserInfo = (req, res, next) => {
   })
   .catch((err) => {
     if (err.name === 'ValidationError' || err.name === 'CastError') {
-      throw new BadRequestError('Переданы некорректные данные');
+      next(new BadRequestError('Переданы некорректные данные'));
+    } else if (err.message === 'Пользователь с данным id не найден') {
+      next(new NotFoundError('Пользователь с данным id не найден'));
+    } else {
+      next(err);
     }
-    if (err.message === 'Пользователь с данным id не найден') {
-      throw new NotFoundError('Пользователь с данным id не найден');
-    }
-  })
-  .catch(next);
+  });
+  // .catch(next);
 };
 
 const updateUserInfoById = (req, res, next) => {
@@ -101,13 +102,14 @@ const updateUserInfoById = (req, res, next) => {
   })
   .catch((err) => {
     if (err.name === 'ValidationError' || err.name === 'CastError') {
-      throw new BadRequestError('Переданы некорректные данные');
+      next(new BadRequestError('Переданы некорректные данные'));
+    } else if (err.message === 'Пользователь с данным id не найден') {
+      next(new NotFoundError('Пользователь с данным id не найден'));
+    } else {
+      next(err);
     }
-    if (err.message === 'Пользователь с данным id не найден') {
-      throw new NotFoundError('Пользователь с данным id не найден');
-    }
-  })
-  .catch(next);
+  });
+  // .catch(next);
 };
 
 const updateUserAvatarById = (req, res, next) => {
@@ -127,13 +129,14 @@ const updateUserAvatarById = (req, res, next) => {
   })
   .catch((err) => {
     if (err.name === 'ValidationError' || err.name === 'CastError') {
-      throw new BadRequestError('Переданы некорректные данные');
+      next(new BadRequestError('Переданы некорректные данные'));
+    } else if (err.message === 'Пользователь с данным id не найден') {
+      next(new NotFoundError('Пользователь с данным id не найден'));
+    } else {
+      next(err);
     }
-    if (err.message === 'Пользователь с данным id не найден') {
-      throw new NotFoundError('Пользователь с данным id не найден');
-    }
-  })
-  .catch(next);
+  });
+  // .catch(next);
 };
 
 const login = (req, res, next) => {
