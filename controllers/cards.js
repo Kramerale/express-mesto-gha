@@ -23,10 +23,12 @@ const createCard = (req, res, next) => {
   })
   .catch((err) => {
     if (err.name === 'ValidationError' || err.name === 'CastError') {
-      throw new BadRequestError('Переданы некорректные данные');
+      next(new BadRequestError('Переданы некорректные данные'));
+    } else {
+      next(err);
     }
-  })
-  .catch(next);
+  });
+  // .catch(next);
 };
 
 const deleteCard = (req, res, next) => {
