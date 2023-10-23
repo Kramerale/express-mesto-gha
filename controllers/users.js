@@ -36,7 +36,6 @@ const createUser = (req, res, next) => {
       next(err);
     }
   });
-  // .catch(next);
 };
 
 const getUsers = (req, res, next) => {
@@ -64,7 +63,6 @@ const getUserById = (req, res, next) => {
       next(err);
     }
   });
-  // .catch(next);
 };
 
 const getUserInfo = (req, res, next) => {
@@ -82,7 +80,6 @@ const getUserInfo = (req, res, next) => {
       next(err);
     }
   });
-  // .catch(next);
 };
 
 const updateUserInfoById = (req, res, next) => {
@@ -109,7 +106,6 @@ const updateUserInfoById = (req, res, next) => {
       next(err);
     }
   });
-  // .catch(next);
 };
 
 const updateUserAvatarById = (req, res, next) => {
@@ -136,7 +132,6 @@ const updateUserAvatarById = (req, res, next) => {
       next(err);
     }
   });
-  // .catch(next);
 };
 
 const login = (req, res, next) => {
